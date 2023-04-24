@@ -11,3 +11,11 @@ resource "aws_instance" "frontend" {
     Name = "frontend"
   }
 }
+
+resource "aws_route53_record" "frontend" {
+  zone_id = "Z03680352BDV8JQ0ARSB5"
+  name    = "frontend-dev.netseclab.ca"
+  type    = "A"
+  ttl     = 30
+  records = [aws_instance.frontend.private_ip]
+}
