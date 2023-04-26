@@ -23,7 +23,7 @@ resource "aws_instance" "components" {
   security_groups = [data.aws_security_group.allow-all.id]
 
   tags = {
-    Name = "count.index"
+    Name = var.components[count.index]
   }
 }
 ##
