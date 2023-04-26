@@ -65,22 +65,22 @@ resource "aws_instance" "components" {
 
 #####
 ##
-resource "aws_instance" "catalogue" {
-  ami           = data.aws_ami.centos.image_id
-  instance_type = t3.micro
+# resource "aws_instance" "catalogue" {
+#   ami           = data.aws_ami.centos.image_id
+#   instance_type = t3.micro
 
-  tags = {
-    Name = "catalogue"
-  }
-}
+#   tags = {
+#     Name = "catalogue"
+#   }
+# }
 
-resource "aws_route53_record" "catalogue" {
-  zone_id = "Z03680352BDV8JQ0ARSB5"
-  name    = "catalogue-dev.netseclab.ca"
-  type    = "A"
-  ttl     = 30
-  records = [aws_instance.catalogue.private_ip]
-}
+# resource "aws_route53_record" "catalogue" {
+#   zone_id = "Z03680352BDV8JQ0ARSB5"
+#   name    = "catalogue-dev.netseclab.ca"
+#   type    = "A"
+#   ttl     = 30
+#   records = [aws_instance.catalogue.private_ip]
+# }
 
 # #####
 # ##
