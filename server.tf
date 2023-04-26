@@ -20,7 +20,7 @@ resource "aws_instance" "instance" {
   count           = length(var.components)
   ami             = data.aws_ami.centos.image_id
   instance_type   = var.instance_type
-  security_groups = [data.aws_security_group.allow-all.id]
+  vpc_security_group_id = [data.aws_security_group.allow-all.id]
 
   tags = {
     Name = var.components[count.index]
