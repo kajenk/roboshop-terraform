@@ -39,10 +39,10 @@ resource "aws_route53_record" "frontend" {
   name    = "${each.value}-dev.netseclab.ca"
   type    = "A"
   ttl     = 30
-  records = ["aws_instance.${each.value}.private_ip"]
-  depends_on = [
-    aws_instance.instance
-  ]
+  records = ["aws_instance.instance.${each.value}.private_ip"]
+  # depends_on = [
+  #   aws_instance.instance
+  # ]
 }
 
 
