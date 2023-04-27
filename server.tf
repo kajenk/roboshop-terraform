@@ -33,7 +33,7 @@ resource "aws_instance" "instance" {
   }
 }
 
-resource "aws_route53_record" "frontend" {
+resource "aws_route53_record" "dnsrecord" {
   for_each = toset(var.components)
   zone_id = var.dnszone
   name    = "${each.value}-dev.netseclab.ca"
