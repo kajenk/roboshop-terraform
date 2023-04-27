@@ -40,9 +40,9 @@ resource "aws_route53_record" "dnsrecord" {
   type    = "A"
   ttl     = 30
   records = ["aws_instance.instance.${each.value}.private_ip"]
-  # depends_on = [
-  #   aws_instance.instance
-  # ]
+  depends_on = [
+    aws_instance.instance
+  ]
 }
 
 
