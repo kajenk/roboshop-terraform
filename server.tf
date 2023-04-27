@@ -40,6 +40,9 @@ resource "aws_route53_record" "frontend" {
   type    = "A"
   ttl     = 30
   records = ["aws_instance.${each.value}.private_ip"]
+  depends_on = [
+    aws_instance.instance
+  ]
 }
 
 
