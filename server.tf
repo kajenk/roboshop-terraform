@@ -7,6 +7,7 @@ data "aws_ami" "centos" {
 data "aws_security_group" "allow-all" {
   name = "allow-all"
 }
+
 variable "instance_type" {
   default = "t3.micro"
 
@@ -16,16 +17,42 @@ variable "components" {
 
 }
 
+variable "dnszone" {
+  default = "Z03680352BDV8JQ0ARSB5"
+
+}
+
 resource "aws_instance" "instance" {
-  count           = length(var.components)
+  for_each = toset(var.components)
   ami             = data.aws_ami.centos.image_id
   instance_type   = var.instance_type
   vpc_security_group_ids = [data.aws_security_group.allow-all.id]
 
   tags = {
-    Name = var.components[count.index]
+    Name = each.value
   }
 }
+
+resource "aws_route53_record" "frontend" {
+  for_each = toset(var.components)
+  zone_id = var.dnszone
+  name    = "${each.value}-dev.netseclab.ca"
+  type    = "A"
+  ttl     = 30
+  records = ["aws_instance.${each.value}.private_ip"]
+}
+
+
+# resource "aws_instance" "instance" {
+#   count           = length(var.components)
+#   ami             = data.aws_ami.centos.image_id
+#   instance_type   = var.instance_type
+#   vpc_security_group_ids = [data.aws_security_group.allow-all.id]
+
+#   tags = {
+#     Name = var.components[count.index]
+#   }
+# }
 ##
 # resource "aws_instance" "frontend" {
 #   ami           = data.aws_ami.centos.image_id
